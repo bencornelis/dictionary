@@ -7,10 +7,19 @@
     <li class="list-group-item"><mark><%= definition.part_of_speech() %></mark>
       <ol>
         <% definition.meanings().each() do |meaning| %>
-          <li><%= meaning %></li>
+          <li><%= meaning %> <a href="/words/<%= @word.string_form() %>/<%= definition.part_of_speech() %>/edit/<%=definition.meanings.index(meaning) %>">edit</a></li>
         <% end %>
       </ol>
+
       <a href="/<%= @word.string_form() %>/newline/<%= definition.part_of_speech() %>" id="line_add">add line</a>
+
+      <% if @edit %>
+        <form class="form-inline" action="/words/<%= @word.string_form() %>/<%= @definition.part_of_speech() %>/edit/<%=@index %>" method="post">
+          <input type="textarea" name="line" value="<%= @line %>">
+          <button type="submit" class="btn btn-warning">change line</button>
+        </form>
+      <% end %>
+
     </li>
   <% end %>
 </ul>
