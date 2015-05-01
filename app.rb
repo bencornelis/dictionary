@@ -30,13 +30,10 @@ end
 
 get('/words/:string_form') do
   @word = Word.find(params.fetch('string_form'))
-  @edit = false
   erb(:word)
 end
 
 post('/words/:string_form') do
-
-  @edit = false
   part_of_speech = params.fetch('part_of_speech')
   meaning = params.fetch('meaning')
   new_definition = Definition.new({:part_of_speech => part_of_speech})
@@ -52,7 +49,6 @@ post('/words/:string_form/:part_of_speech') do
   @word = Word.find(params.fetch('string_form'))
   definition = @word.find_definition(part_of_speech)
   definition.add_meaning(new_meaning)
-  @edit = false
   erb(:word)
 end
 
@@ -82,6 +78,5 @@ post('/words/:string_form/:part_of_speech/edit/:index') do
   definition = @word.find_definition(params.fetch('part_of_speech'))
   index = params.fetch('index').to_i
   definition.meanings[index] = params.fetch('line')
-  @edit = false
   erb(:word)
 end
