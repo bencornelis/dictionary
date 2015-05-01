@@ -15,25 +15,37 @@ get('/removeword/:string_form') do
   erb(:index)
 end
 
-post('/success') do
-  @word = Word.new({:string_form => params.fetch('word')})
-  @new_word = Word.find(@word.string_form()) == nil
-  if @new_word
+post('/result') do
+  string_form = params.fetch('word')
+  @word = Word.new({:string_form => string_form})
+  @is_new_word = Word.find(string_form) == nil
+  if @is_new_word
     @word.save()
   end
-  erb(:success)
+  erb(:result)
+end
+
+get('/success/:string_form') do
+  @words = Word.all()
+  @marked_word = Word.find(params.fetch('string_form'))
+  erb(:index)
 end
 
 get('/words/new') do
   erb(:word_form)
 end
 
-get('/words/:string_form') do
+get('/:string_form') do
   @word = Word.find(params.fetch('string_form'))
   erb(:word)
 end
 
-post('/words/:string_form') do
+get('/:string_form/definitions/new') do
+  @string_form = params.fetch('string_form')
+  erb(:definition_form)
+end
+
+post('/:string_form') do
   part_of_speech = params.fetch('part_of_speech')
   meaning = params.fetch('meaning')
   new_definition = Definition.new({:part_of_speech => part_of_speech})
@@ -43,7 +55,14 @@ post('/words/:string_form') do
   erb(:word)
 end
 
-post('/words/:string_form/:part_of_speech') do
+get('/:string_form/newline/:part_of_speech') do
+  @string_form = params.fetch('string_form')
+  word = Word.find(@string_form)
+  @part_of_speech = params.fetch('part_of_speech')
+  erb(:line_form)
+end
+
+post('/:string_form/:part_of_speech') do
   new_meaning = params.fetch('meaning')
   part_of_speech = params.fetch('part_of_speech')
   @word = Word.find(params.fetch('string_form'))
@@ -52,19 +71,7 @@ post('/words/:string_form/:part_of_speech') do
   erb(:word)
 end
 
-get('/words/:string_form/definitions/new') do
-  @string_form = params.fetch('string_form')
-  erb(:definition_form)
-end
-
-get('/:string_form/newline/:part_of_speech') do
-  @string_form = params.fetch('string_form')
-  word = Word.find(@string_form)
-  @part_of_speech = params.fetch('part_of_speech')
-  erb(:line_form)
-end
-
-get('/words/:string_form/:part_of_speech/edit/:index') do
+get('/:string_form/:part_of_speech/edit/:index') do
   @index = params.fetch('index').to_i
   @word = Word.find(params.fetch('string_form'))
   @definition = @word.find_definition(params.fetch('part_of_speech'))
@@ -73,10 +80,11 @@ get('/words/:string_form/:part_of_speech/edit/:index') do
   erb(:word)
 end
 
-post('/words/:string_form/:part_of_speech/edit/:index') do
+post('/:string_form/:part_of_speech/edit/:index') do
   @word = Word.find(params.fetch('string_form'))
   definition = @word.find_definition(params.fetch('part_of_speech'))
-  index = params.fetch('index').to_i
-  definition.meanings[index] = params.fetch('line')
+  edited_index = params.fetch('index').to_i
+  edited_meaning = params.fetch('line')
+  definition.meanings[edited_index] = edited_meaning
   erb(:word)
 end

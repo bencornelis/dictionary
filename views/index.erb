@@ -1,12 +1,18 @@
 <h1>Dictionary
-<a href="/words/new" type='button' class='btn btn-success btn-add'>Add word</a>
+<a href="/words/new" type='button' class='btn btn-info btn-add'>Add word</a>
 </h1>
-
+<hr>
 <ul>
   <% @words.each() do |word| %>
     <li class="list-group-item">
-      <a class="word" href="/words/<%= word.string_form() %>"><%= word.string_form() %></a>
-      <a id = "<%= word.string_form() %>_remove" href="/removeword/<%= word.string_form() %>" type="button" class="btn btn-danger remove">remove</a>
+      <a class="word" href="/<%= word.string_form() %>">
+        <% if word == @marked_word %>
+          <mark><%= word.string_form() %></mark>
+        <% else %>
+          <%= word.string_form() %>
+        <% end %>
+      </a>
+      <a id = "<%= word.string_form() %>_remove" href="/removeword/<%= word.string_form() %>" type="button" class="btn btn-warning remove">remove</a>
     </li>
   <% end %>
 </ul>
