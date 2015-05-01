@@ -1,10 +1,10 @@
-h1 {
+h1, h2 {
   margin-top:20px;
   margin-bottom:30px;
 }
 .remove {
   float:right;
-  margin-top: -7px;
+  margin-top: -3px;
 }
 
 .word {

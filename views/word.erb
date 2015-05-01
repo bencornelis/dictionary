@@ -6,8 +6,11 @@
   <% @word.definitions.each() do |definition| %>
     <li class="list-group-item"><mark><%= definition.part_of_speech() %></mark>
       <ol>
-        <li><%= definition.meaning() %></li>
+        <% definition.meanings().each() do |meaning| %>
+          <li><%= meaning %></li>
+        <% end %>
       </ol>
+      <a href="/<%= @word.string_form() %>/newline/<%= definition.part_of_speech() %>" id="line_add">add line</a>
     </li>
   <% end %>
 </ul>

@@ -55,6 +55,14 @@ describe('the definition path', {:type => :feature}) do
     fill_in('part_of_speech', :with => 'verb')
     fill_in('meaning', :with => 'move at a speed faster than a walk')
     click_button('Submit')
-    expect(page).to have_content('verb: move at a speed faster than a walk')
+    expect(page).to have_content('move at a speed faster than a walk')
+  end
+
+  it('allows user to add lines to an existing definition') do
+    visit('/words/run')
+    click_link('line_add')
+    fill_in('meaning', :with => 'move about in a hurried and hectic way')
+    click_button('Add')
+    expect(page).to have_content('move about in a hurried and hectic way')
   end
 end

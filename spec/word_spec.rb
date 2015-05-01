@@ -25,8 +25,7 @@ describe(Word) do
   describe('#add_definition') do
     it('adds a definition to the definition list') do
       test_word = Word.new({:word => 'run'})
-      test_definition = Definition.new({:part_of_speech =>'verb',
-        :meaning => 'move at a speed faster than a walk'})
+      test_definition = Definition.new({:part_of_speech =>'verb'})
       test_word.add_definition(test_definition)
       expect(test_word.definitions()).to(eq([test_definition]))
     end
@@ -84,16 +83,12 @@ describe(Word) do
     end
   end
 
-  # describe('#new_word?') do
-  #   it('is true if there is no saved word with the same string_form') do
-  #     test_word = Word.new({:string_form => 'fun'})
-  #     expect(test_word.new_word?()).to(eq(true))
-  #   end
-  #
-  #   it('is false if a word with the same string_form has been saved') do
-  #     previous_word = Word.new({:string_form => 'fun'})
-  #     test_word = Word.new({:string_form => 'fun'})
-  #     expect(test_word.new_word?()).to(eq(false))
-  #   end
-  # end
+  describe('#find_definition') do
+    it('finds a definition by its part of speech') do
+      test_word = Word.new({:word => 'run'})
+      test_definition = Definition.new({:part_of_speech =>'verb'})
+      test_word.add_definition(test_definition)
+      expect(test_word.find_definition('verb')).to(eq(test_definition))
+    end
+  end
 end

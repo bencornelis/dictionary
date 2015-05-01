@@ -15,6 +15,14 @@ class Word
     @@words.push(self)
   end
 
+  define_method(:find_definition) do |part_of_speech|
+    @definitions.each do |definition|
+      if definition.part_of_speech() == part_of_speech
+        return definition
+      end
+    end
+  end
+
   define_singleton_method(:all) do
     @@words
   end

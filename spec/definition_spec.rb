@@ -9,10 +9,18 @@ describe(Definition) do
     end
   end
 
-  describe('#meaning') do
-    it('returns the meaning of the word') do
-      test_definition = Definition.new({:meaning => 'set to the value'})
-      expect(test_definition.meaning()).to(eq('set to the value'))
+  describe('#meanings') do
+    it('is empty at first') do
+      test_definition = Definition.new({:part_of_speech => 'verb'})
+      expect(test_definition.meanings()).to(eq([]))
+    end
+  end
+
+  describe('#add_meaning') do
+    it('adds a meaning to the list of meanings') do
+      test_definition = Definition.new({:part_of_speech => 'verb'})
+      test_definition.add_meaning('walk very quickly')
+      expect(test_definition.meanings()).to(eq(['walk very quickly']))
     end
   end
 end
